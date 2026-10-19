@@ -2,6 +2,14 @@ import { GCounter, PNCounter, LWWRegister, ORSet, LWWMap } from '../src/core';
 
 // ─── GCounter ─────────────────────────────────────────────────────────────────
 
+describe('gcounter value', () => {
+  test('value sums the node slots', () => {
+    const c = new GCounter('n1', 3);
+    c.increment('n2', 4);
+    expect(c.value).toBe(7);
+  });
+});
+
 describe('GCounter', () => {
   test('initial value is 0', () => {
     const c = new GCounter();
