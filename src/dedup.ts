@@ -14,7 +14,7 @@
 export interface DedupOptions<T> {
   /** Field name or custom key extractor for comparison. */
   key?: string | ((item: T) => string);
-  /** Similarity threshold 0–1 (default: 0.85). */
+  /** Similarity threshold 0–1 (default: 0.7). */
   threshold?: number;
   /** Whether comparison is case sensitive (default: false). */
   caseSensitive?: boolean;
@@ -109,7 +109,8 @@ export function dedup<T>(
   items: T[],
   options?: DedupOptions<T>,
 ): DedupResult<T> {
-  const threshold = options?.threshold ?? 0.85;
+  // 0.7 lets names that differ only in punctuation match: 'Smith, John' and 'Smith John' are 0.73 similar
+  const threshold = options?.threshold ?? 0.7;
   const caseSensitive = options?.caseSensitive ?? false;
   const keyOpt = options?.key;
 
