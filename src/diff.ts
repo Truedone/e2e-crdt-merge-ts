@@ -115,6 +115,11 @@ function deepEqual(a: any, b: any): boolean {
   if (typeof a !== typeof b) return false;
   if (typeof a !== 'object') return false;
 
+  // a Date has no own keys, so two different instants compared equal below; compare the instants
+  if (a instanceof Date || b instanceof Date) {
+    return a instanceof Date && b instanceof Date && a.getTime() === b.getTime();
+  }
+
   if (Array.isArray(a) && Array.isArray(b)) {
     if (a.length !== b.length) return false;
     for (let i = 0; i < a.length; i++) {

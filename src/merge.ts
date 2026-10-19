@@ -42,16 +42,20 @@ export function merge<T extends Record<string, any>>(
   const tsB = options?.timestamps?.b ?? 1; // B wins by default for LWW
 
   // Build index by key
+  // rows with no key cannot be matched; they are kept, after the merged rows, instead of being dropped
+  const keyless: T[] = [];
   const indexA = new Map<any, T>();
   for (const row of a) {
     const k = row[key];
     if (k !== undefined && k !== null) indexA.set(k, row);
+    else keyless.push(row);
   }
 
   const indexB = new Map<any, T>();
   for (const row of b) {
     const k = row[key];
     if (k !== undefined && k !== null) indexB.set(k, row);
+    else keyless.push(row);
   }
 
   // All keys, preserving insertion order (A first, then new from B)
@@ -94,7 +98,7 @@ export function merge<T extends Record<string, any>>(
     return 0;
   });
 
-  return merged;
+  return [...merged, ...keyless];
 }
 
 function mergeRows<T extends Record<string, any>>(
