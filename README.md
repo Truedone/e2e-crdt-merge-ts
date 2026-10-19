@@ -233,3 +233,7 @@ Built with math, not hope. 🧬
 **[⭐ Star on GitHub](https://github.com/mgillr/crdt-merge-ts)** • **[🤗 Try on HuggingFace](https://huggingface.co/spaces/Optitransfer/crdt-merge)** • **[📦 npm](https://www.npmjs.com/package/crdt-merge)**
 
 </div>
+
+## Testing
+
+Run `npx jest --forceExit` to run the test suite.
