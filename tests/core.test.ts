@@ -2,6 +2,13 @@ import { GCounter, PNCounter, LWWRegister, ORSet, LWWMap } from '../src/core';
 
 // ─── GCounter ─────────────────────────────────────────────────────────────────
 
+describe('gcounter increments', () => {
+  test('rejects fractional increments', () => {
+    const c = new GCounter('n1');
+    expect(() => c.increment('n1', 1.5)).toThrow(/integer/);
+  });
+});
+
 describe('GCounter', () => {
   test('initial value is 0', () => {
     const c = new GCounter();
