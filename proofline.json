@@ -1,0 +1,62 @@
+{
+  "schema": "proofline/1",
+  "project": "crdt-merge-ts",
+  "defaults": {
+    "base": "origin/main",
+    "branch": "main"
+  },
+  "phases": [
+    {
+      "id": "implement"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "SPK3-DATES",
+      "title": "diff reports a changed Date field as a modification",
+      "phase": "implement",
+      "scope": {
+        "allow": [
+          "src/diff.ts",
+          "tests/diff-dates.test.ts",
+          "proofline.json"
+        ]
+      },
+      "criteria": [
+        {
+          "id": "SPK3-DATES-AC01",
+          "mandatory": true,
+          "statement": "a Date field that changed is a modification, and the same instant in another Date is unchanged",
+          "verifier": {
+            "type": "test_red_green",
+            "test_file": "tests/diff-dates.test.ts",
+            "cmd": "npx jest {test}",
+            "setup": "npm install --no-package-lock --no-audit --no-fund --silent"
+          }
+        },
+        {
+          "id": "SPK3-DATES-AC02",
+          "mandatory": true,
+          "statement": "the jest suite passes",
+          "verifier": {
+            "type": "command",
+            "cmd": "npx jest",
+            "expect_exit": 0,
+            "timeout_s": 600
+          }
+        },
+        {
+          "id": "SPK3-DATES-AC03",
+          "mandatory": true,
+          "statement": "changes stay in scope",
+          "verifier": {
+            "type": "scope"
+          }
+        }
+      ],
+      "stop_rules": [
+        "If a criterion cannot pass without loosening a test or widening the scope: STOP and report file:line and the measured value."
+      ]
+    }
+  ]
+}
