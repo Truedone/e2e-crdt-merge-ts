@@ -36,6 +36,7 @@ export interface GCounterJSON {
  * Grow-only counter. Each node has its own slot; value = sum of all slots.
  *
  * Perfect for: page views, download counts, event counters — anything that only goes up.
+ * Counts stay per node until replicas merge.
  */
 export class GCounter {
   private _counts: Map<string, number>;
