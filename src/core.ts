@@ -56,7 +56,7 @@ export class GCounter {
 
   /** Increment the counter for a given node. */
   increment(nodeId: string, amount = 1): void {
-    if (amount < 0) throw new Error('GCounter only supports non-negative increments');
+    if (!Number.isInteger(amount) || amount < 0) throw new Error('GCounter only supports non-negative integer increments');
     this._counts.set(nodeId, (this._counts.get(nodeId) ?? 0) + amount);
   }
 
